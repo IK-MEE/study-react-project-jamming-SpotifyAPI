@@ -188,6 +188,9 @@ const Spotify = {
     const token = await Spotify.getAccessToken();
     if (!token) return [];
 
+    console.log('Token being used:', token); // 👈 add this
+    console.log('Token expiry:', localStorage.getItem('spotify_token_expiry')); // 👈 and this
+
     const finalTerm = sessionStorage.getItem(PENDING_TERM_KEY) || term;
 
     const res = await fetch(
@@ -195,20 +198,10 @@ const Spotify = {
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    if (res.status === 401) {
-      localStorage.removeItem('spotify_access_token');
-      localStorage.removeItem('spotify_token_expiry');
-      accessToken = undefined;
-
-      await Spotify.refreshAccessToken();
-      if (accessToken) return Spotify.search(finalTerm);
-
-      localStorage.removeItem('spotify_refresh_token');
-      refreshToken = null;
-      await Spotify.getAccessToken();
+    if (!res.ok) {
+      console.error(`Search failed: ${res.status}`, await res.text());
       return [];
     }
-
     const json = await res.json();
     if (!json.tracks) return [];
 
