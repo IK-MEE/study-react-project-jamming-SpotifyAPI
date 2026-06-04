@@ -43,7 +43,7 @@ async function startAuth() {
     client_id: clientId,
     response_type: 'code',
     redirect_uri: redirectUri,
-    scope: 'playlist-modify-public playlist-modify-private',
+    scope: 'playlist-modify-public playlist-modify-private user-read-private user-read-email',
     code_challenge_method: 'S256',
     code_challenge: challenge
   });

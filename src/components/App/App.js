@@ -13,31 +13,16 @@ const App = () => {
   const [isSaving, setIsSaving] = useState(false);
 
   const search = useCallback(async (term) => {
-    localStorage.setItem("pending_search", term);
-
     const tracks = await Spotify.search(term);
     const indexed = tracks.map((track, i) => ({ ...track, index: i }));
     setSearchResults(indexed);
-
-    localStorage.removeItem("pending_search");
   }, []);
 
   useEffect(() => {
     (async () => {
-      const pending = localStorage.getItem("pending_search");
-      if (!pending) return;
-
-      const token = await Spotify.getAccessToken();
-      if (!token) return;
-
-      const tracks = await Spotify.search(pending);
-      const indexed = tracks.map((track, i) => ({ ...track, index: i }));
-      setSearchResults(indexed);
-
-      localStorage.removeItem("pending_search");
+      await Spotify.getAccessToken(); // ensures token is ready after redirect
     })();
   }, []);
-
 
   const addTrack = useCallback(
     (track) => {
@@ -51,7 +36,6 @@ const App = () => {
     },
     [playlistTracks]
   );
-
 
   const removeTrack = useCallback((track) => {
     setPlaylistTracks((prevTracks) =>
