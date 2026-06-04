@@ -188,9 +188,6 @@ const Spotify = {
     const token = await Spotify.getAccessToken();
     if (!token) return [];
 
-    console.log('Token being used:', token); // 👈 add this
-    console.log('Token expiry:', localStorage.getItem('spotify_token_expiry')); // 👈 and this
-
     const finalTerm = sessionStorage.getItem(PENDING_TERM_KEY) || term;
 
     const res = await fetch(

@@ -1,39 +1,43 @@
-# ไฟล์ Spotify.js ใช้ clientId และ redirectUri จาก .env <br>
-สามารถลงทะเบียนรหัสของคุณเองได้ที่ https://developer.spotify.com/
-
-## วิธีใช้งาน
-1. `npm install`
-2. สร้างไฟล์ `.env` แล้วเพิ่ม:
-    REACT_APP_SPOTIFY_CLIENT_ID=เลขที่ได้จากการสมัคร
-    REACT_APP_SPOTIFY_REDIRECT_URI=http://127.0.0.1:3000(ต้องตรงกับที่ระบุใน SpotifyDev)
-3. รันโปรเจกต์ด้วย `npm start`
-
 # 🎵 Jamming (Spotify Playlist App)
 
-โปรเจกต์นี้พัฒนาเพื่อฝึกเชื่อมต่อ API จริงของ Spotify  
-โดยใช้ React และ OAuth2 PKCE Flow  
-เป็นส่วนหนึ่งของการเรียน Codecademy Full-Stack Developer
+A React app for searching Spotify tracks and saving custom playlists to your account.  
+Built as part of the Codecademy Full-Stack Developer curriculum to practice real-world API integration.
 
-## จุดประสงค์
-ฝึกทำงานกับ REST API, token-based authentication และ React state management  
-รวมถึงเข้าใจการทำงานของ OAuth2 PKCE Flow ตั้งแต่การขอสิทธิ์จนถึงการรีเฟรช Token
+## ⚠️ Important Note (Spotify API Policy Change)
 
-## สิ่งที่ทำได้
-- ค้นหาเพลงจาก Spotify
-- เพิ่มเพลงเข้า Playlist
-- บันทึก Playlist ไปยังบัญชีผู้ใช้
-- ใช้ PKCE เพื่อเพิ่มความปลอดภัยในการรับ Access Token
-- ปุ่มแสดงตัวอย่างเพลงให้ฟัง (ถ้าตัวเพลงมี preview_url ขณะดึงข้อมูล)
+As of late 2024, Spotify requires the **app owner to have an active Premium subscription** to use the Web API — including the search endpoint. Free accounts will receive a `403 Forbidden` error regardless of correct implementation.
 
-## สิ่งที่ได้เรียนรู้
-- การจัดการ state ระหว่าง component หลายตัวใน React
-- การควบคุม flow ของ async/await
-- การใช้ useEffect และ useCallback อย่างเหมาะสม
-- การดีบักปัญหา authentication กับ API จริง
+This project is fully functional. The limitation is Spotify's policy, not the code.
 
-*(ขอขอบคุณ ChatGPT ที่ช่วยอธิบายหลักการ PKCE และโครงสร้างของโปรแกรมในระหว่างการศึกษา)*  
+## Features
+- Search tracks from Spotify
+- Add tracks to a custom playlist
+- Save the playlist directly to your Spotify account
+- OAuth2 PKCE Flow for secure token handling (no client secret exposed)
+- Track preview playback (when `preview_url` is available)
+
+## Tech Stack
+- React (hooks: `useState`, `useCallback`, `useEffect`)
+- Spotify Web API
+- OAuth2 PKCE Flow (no backend required)
+
+## Setup
+1. Register your app at https://developer.spotify.com/ and get a Client ID
+2. `npm install`
+3. Create a `.env` file:
+REACT_APP_SPOTIFY_CLIENT_ID=your_client_id_here
+REACT_APP_SPOTIFY_REDIRECT_URI=http://127.0.0.1:3000
+> The redirect URI must exactly match what you set in the Spotify Developer Dashboard.
+4. `npm start`
+
+## What I Learned
+- Managing shared state across multiple React components
+- Controlling async/await flow in real API interactions
+- Using `useEffect` and `useCallback` appropriately
+- Debugging authentication issues against a live API (scope errors, token caching, PKCE flow)
+- Understanding OAuth2 PKCE from authorization request to token refresh
 
 ## License
 MIT License  
 © 2025 IK-MEE  
-*(Developed as a learning project with guidance from ChatGPT)*  
+*(Developed as a learning project with guidance from Claude by Anthropic and ChatGPT from OpenAI)*
